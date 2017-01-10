@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+    <h1>十四期的留言板</h1>
+    <button onclick="location.href='add.html'">我要留言</button>
+    <article>
+
+    </article>
+</body>
+</html>
+<script src="js/jquery-3.1.0.js"></script>
+<script>
+    $.ajax({
+        type:'get',
+        url:'/showMsg',
+        success:function (res) {
+            console.log(res)
+            var arr = JSON.parse(res);
+            console.log(arr);
+            var result = ""
+            for(var i = 0;i < arr.length;i ++){
+                console.log("eeeeeeeeeee")
+                var msg = arr[i];
+                //<section><p>留言</p><span>时间</span><span>ip</span></section>
+                result += '<section><p>';
+                result += msg.content;
+                result += '</p><span>'
+                result += formatterDate(msg.time);
+                result += '</span> <span>'
+                result += formatterIp(msg.ip);
+                result += '</span></section>'
+            }
+            console.log(result)
+            $('article').html(result);
+
+
+        }
+    })
+    //2016-12-02T02:20:32.014Z
+    function formatterDate(date) {
+        return date.substr(0,10) + " " + date.substr(11,8);
+    }
+    function formatterIp(ip) {
+        if (ip.startsWith('::1')){
+            return "127.0.0.1"
+        }
+        if (ip.startsWith('::ffff:')){
+            return ip.substring(7);
+        }
+
+    }
+</script>

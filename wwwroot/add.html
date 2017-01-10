@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="">
+    <textarea name="content" id="" cols="30" rows="10"></textarea>
+    <input type="submit" value="提交">
+</form>
+</body>
+</html>
+<script src="js/jquery-3.1.0.js"></script>
+<script>
+    $('form').submit(function (event) {
+        event.preventDefault();
+        var content = $('textarea').val();
+        $.ajax({
+            type:'post',
+            url:'/content',
+            data:{
+                content:content
+            },
+            success:function (res) {
+                alert(res.msg);
+
+            }
+        })
+    })
+</script>
